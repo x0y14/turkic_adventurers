@@ -1,0 +1,10 @@
+﻿# StoryBlocker
+disable_interaction_for_turkic_adventurers_trigger = {
+	trigger_if = {
+		limit = { scope:recipient = { has_character_flag = is_turkic_adventurer } }
+		custom_tooltip = {
+			text = owns_a_story_trigger
+			scope:recipient = { owns_story_of_type = story_turkic_adventurer }
+		}
+	}
+}

@@ -1,0 +1,96 @@
+﻿on_war_started = {
+	on_actions = {
+		ta_turkic_adventer_join_war
+	}
+}
+
+ta_turkic_adventer_join_war = {
+	trigger = {
+		# 攻撃、防御いずれかがグローバルリストの中に入っている
+		OR = {
+			scope:attacker = {
+				any_held_title = {
+					tier >= tier_kingdom
+					any_in_global_list = {
+						variable = ta_loyalty_titles
+						this = prev
+					}
+				}
+			}
+			scope:defender = {
+				any_held_title = {
+					tier >= tier_kingdom
+					any_in_global_list = {
+						variable = ta_loyalty_titles
+						this = prev
+					}
+				}
+			}
+		}
+	}
+
+	effect = {
+		if = {
+			limit = {
+				scope:attacker = {
+					any_held_title = {
+						tier >= tier_kingdom
+						any_in_global_list = {
+							variable = ta_loyalty_titles
+							this = prev
+							save_temporary_scope_as = ta_loyaled_title
+						}
+					}
+				}
+				any_independent_ruler = {
+					is_landless_adventurer = yes
+					has_character_flag = is_turkic_adventurer
+					has_variable = loyalty_title
+					var:loyalty_title = scope:ta_loyaled_title
+				}
+			}
+			every_independent_ruler = {
+				limit = {
+					is_landless_adventurer = yes
+					has_character_flag = is_turkic_adventurer
+					has_variable = loyalty_title
+					var:loyalty_title = scope:ta_loyaled_title
+				}
+				scope:war = {
+					add_attacker = prev
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:defender = {
+					any_held_title = {
+						tier >= tier_kingdom
+						any_in_global_list = {
+							variable = ta_loyalty_titles
+							this = prev
+							save_temporary_scope_as = ta_loyaled_title
+						}
+					}
+				}
+				any_independent_ruler = {
+					is_landless_adventurer = yes
+					has_character_flag = is_turkic_adventurer
+					has_variable = loyalty_title
+					var:loyalty_title = scope:ta_loyaled_title
+				}
+			}
+			every_independent_ruler = {
+				limit = {
+					is_landless_adventurer = yes
+					has_character_flag = is_turkic_adventurer
+					has_variable = loyalty_title
+					var:loyalty_title = scope:ta_loyaled_title
+				}
+				scope:war = {
+					add_defender = prev
+				}
+			}
+		}
+	}
+}

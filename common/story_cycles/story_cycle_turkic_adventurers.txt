@@ -1,0 +1,142 @@
+﻿story_turkic_adventurer = {
+	on_setup = {
+		story_owner = { add_character_flag = is_turkic_adventurer }
+		story_owner = { save_scope_as = owner }
+		if = {
+			limit = { debug_only = yes }
+			debug_log = "Turkic Adventurer AI story started:"
+			debug_log_date = yes
+			debug_log_scopes = yes
+		}
+
+		set_variable = {
+			name = loyalty_title
+			value = story_owner.var:loyalty_title
+		}
+		add_to_global_variable_list = {
+			name = ta_loyalty_titles target = var:loyalty_title
+		}
+
+		# MAA
+		story_owner = {
+			create_maa_regiment = {
+				type = horse_archers
+				check_can_recruit = no
+				size = 6
+			}
+			create_maa_regiment = {
+				type = horse_archers
+				check_can_recruit = no
+				size = 6
+			}
+			create_maa_regiment = {
+				type = horse_archers
+				check_can_recruit = no
+				size = 6
+			}
+		}
+		# Troops
+		story_owner = {
+			spawn_army = {
+				name = event_troop_default_name
+				levies = 1000
+				men_at_arms = {
+					type = horse_archers
+					stacks = 10
+				}
+				location = province:499
+				origin = province:499
+				uses_supply = no
+				inheritable = yes
+			}
+			spawn_army = {
+				name = event_troop_default_name
+				levies = 1000
+				men_at_arms = {
+					type = horse_archers
+					stacks = 10
+				}
+				location = province:499
+				origin = province:499
+				uses_supply = no
+				inheritable = yes
+			}
+			spawn_army = {
+				name = event_troop_default_name
+				levies = 1000
+				men_at_arms = {
+					type = horse_archers
+					stacks = 10
+				}
+				location = province:499
+				origin = province:499
+				uses_supply = no
+				inheritable = yes
+			}
+			spawn_army = {
+				name = event_troop_default_name
+				levies = 1000
+				men_at_arms = {
+					type = horse_archers
+					stacks = 10
+				}
+				location = province:499
+				origin = province:499
+				uses_supply = no
+				inheritable = yes
+			}
+			spawn_army = {
+				name = event_troop_default_name
+				levies = 1000
+				men_at_arms = {
+					type = horse_archers
+					stacks = 10
+				}
+				location = province:499
+				origin = province:499
+				uses_supply = no
+				inheritable = yes
+			}
+		}
+		story_owner = {
+			add_gold = 1000
+		}
+		# add_domicile_building = mess_tent_brewers
+	}
+	on_end = {
+		story_owner = {
+			destroy_title = primary_title
+		}
+
+		story_owner = { save_scope_as = owner }
+		if = {
+			limit = { debug_only = yes }
+			debug_log = "Turkic Adventurer AI story started:"
+			debug_log_date = yes
+			debug_log_scopes = yes
+		}
+	}
+
+	on_owner_death = {
+		story_owner = {
+			save_scope_as = dead_owner
+		}
+		if = {
+			limit = {
+				exists = story_owner.player_heir
+				story_owner.player_heir = { house = scope:dead_owner.house }
+			}
+			story_owner.player_heir = {
+				add_character_flag = is_turkic_adventurer
+				set_variable = {
+					name = loyalty_title
+					value = var:loyalty_title
+				}
+			}
+			make_story_owner = story_owner.player_heir
+		}
+		else = {
+			end_story = yes
+		}
+	}
+}

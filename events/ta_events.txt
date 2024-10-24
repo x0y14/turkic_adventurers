@@ -1,0 +1,126 @@
+﻿namespace = turkic_adventurers
+
+# ストーリーの開始
+# ROOT: Character
+turkic_adventurers.0001 = {
+	hidden = yes
+	trigger = {
+		is_available_adult = yes
+		# is_landless_adventurer = yes
+		culture = { has_cultural_pillar = heritage_turkic }
+	}
+
+	immediate = {
+		create_story = story_adventurer_ai
+		create_story = story_turkic_adventurer
+	}
+}
+
+
+# 一族の作成も含めた
+turkic_adventurers.9999 = {
+	hidden = yes
+
+	immediate = {
+		# Grand Father
+		create_character = {
+			template = ta_turkic_adventurer_template
+			age = { 75 120 }
+			location = root.location
+			dynasty = none
+			random_culture = {
+				culture:turkish = { trigger = { always = yes } }
+				culture:cuman = { trigger = { always = yes } }
+				culture:kipchak = { trigger = { always = yes } }
+				culture:pecheneg = { trigger = { always = yes } }
+				culture:khazar = { trigger = { always = yes } }
+				culture:kimek = { trigger = { always = yes } }
+				culture:karluk = { trigger = { always = yes } }
+				# culture:uyghur = { trigger = { always = yes } }
+				culture:kirghiz = { trigger = { always = yes } }
+			}
+			faith = faith:tengri_pagan
+			save_scope_as = ta_turkic_adventurer_grand_father
+		}
+		## Create dynasty
+		scope:ta_turkic_adventurer_grand_father = {
+			create_landless_adventurer_title_effect = {
+				REASON = flag:voluntary
+				FLAVOR_CHAR = prev
+			}
+			add_realm_law_skip_effects = camp_purpose_mercenaries
+
+			scope:new_title = { set_coa = scope:ta_turkic_adventurer_grand_father.house }
+		}
+		# Father
+		create_character = {
+			template = ta_turkic_adventurer_template
+			age = { 44 60 }
+			location = root.location
+			father = scope:ta_turkic_adventurer_grand_father
+			dynasty_house = scope:ta_turkic_adventurer_grand_father.house
+			culture = scope:ta_turkic_adventurer_grand_father.culture
+			faith = faith:maturidi
+			save_scope_as = ta_turkic_adventurer_father
+		}
+		# Adventurer
+		create_character = {
+			template = ta_turkic_adventurer_template
+			age = { 22 30 }
+			location = root.location
+			father = scope:ta_turkic_adventurer_father
+			dynasty_house = scope:ta_turkic_adventurer_grand_father.house
+			culture = scope:ta_turkic_adventurer_grand_father.culture
+			faith = faith:maturidi
+			save_scope_as = ta_turkic_adventurer
+		}
+		## Adventurer' wife
+		create_character = {
+			template = ta_wife_character_template
+			location = root.location
+			culture = scope:ta_turkic_adventurer_grand_father.culture
+			faith = faith:maturidi
+			after_creation = {
+				marry = scope:ta_turkic_adventurer
+			}
+		}
+		# Adventurer' Brother
+		create_character = {
+			template = ta_turkic_adventurer_template
+			age = { 16 25 }
+			location = root.location
+			father = scope:ta_turkic_adventurer_father
+			dynasty_house = scope:ta_turkic_adventurer_grand_father.house
+			faith = faith:maturidi
+			save_scope_as = ta_turkic_adventurer_brother
+		}
+		# create_character = {
+		# 	template = ta_wife_character_template
+		# 	location = root.location
+		# 	culture = scope:ta_turkic_adventurer_grand_father.culture
+		# 	faith = faith:maturidi
+		# 	after_creation = {
+		# 		marry = scope:ta_turkic_adventurer_brother
+		# 	}
+		# }
+
+		# Adventurerまでタイトルを移動
+		scope:ta_turkic_adventurer_grand_father = {
+			set_designated_heir = scope:ta_turkic_adventurer_father
+			depose = yes
+		}
+		scope:ta_turkic_adventurer_father = {
+			set_designated_heir = scope:ta_turkic_adventurer
+			depose = yes
+		}
+
+		# Start Story
+		scope:ta_turkic_adventurer = {
+			set_variable = {
+				name = loyalty_title
+				value = root.primary_title
+			}
+			trigger_event = turkic_adventurers.0001
+		}
+	}
+}

@@ -1,0 +1,46 @@
+﻿ta_turkic_adventurer_template = {		
+		#Education
+		random_traits_list = {
+			education_martial_2 = {
+				weight = { base = 10 }
+			}
+			education_martial_3 = {
+				weight = { base = 30 }
+			}
+			education_martial_4 = {
+				weight = { base = 20}
+			}
+		}
+
+		random_traits_list = {
+			count = 3
+			brave = {}
+			greedy = {}
+			gregarious = {}
+			wrathful = {}
+			deceitful = {}
+			ambitious = {}
+		}
+	
+		random_traits = no
+		gender_female_chance = root_soldier_female_chance
+		#Skills
+		diplomacy = { min_template_low_skill max_template_decent_skill }
+		martial = { min_template_decent_skill max_template_decent_skill }
+		stewardship = { min_template_low_skill max_template_low_skill }
+		intrigue = { min_template_low_skill max_template_decent_skill }
+		learning = { min_template_low_skill max_template_low_skill }
+		prowess = { min_template_decent_skill max_template_decent_skill }
+}
+
+ta_wife_character_template = {
+	age = { 16 24 }
+	gender = female
+	random_traits = yes
+	dynasty = none
+	random_traits_list = {
+		beauty_good_1 = {}
+		beauty_good_2 = {}
+		beauty_good_3 = {}
+	}
+}
